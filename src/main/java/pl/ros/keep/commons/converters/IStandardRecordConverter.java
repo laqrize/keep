@@ -6,7 +6,7 @@ import pl.ros.keep.api.user.UserDto;
 import pl.ros.keep.commons.crud.dtos.AbstractCustomDto;
 import pl.ros.keep.commons.crud.entities.AbstractCustomEntity;
 import pl.ros.keep.commons.crud.enums.EntityStatus;
-import pl.ros.keep.core.users.AppUser;
+import pl.ros.keep.core.jpa.users.AppUser;
 
 public interface IStandardRecordConverter<D extends AbstractCustomDto, E extends AbstractCustomEntity> extends IConverter<D, E> {
 

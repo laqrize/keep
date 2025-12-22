@@ -13,8 +13,8 @@ import pl.ros.keep.commons.crud.enums.CrudOperation;
 import pl.ros.keep.commons.crud.enums.EntityStatus;
 import pl.ros.keep.commons.crud.services.AbstractCrudService;
 import pl.ros.keep.commons.utils.NpeUtils;
-import pl.ros.keep.core.users.AppUser;
-import pl.ros.keep.core.users.UserRepository;
+import pl.ros.keep.core.jpa.users.AppUser;
+import pl.ros.keep.core.jpa.users.UserRepository;
 import pl.ros.keep.infrastracture.exceptions.ConflictException;
 
 import java.util.Arrays;

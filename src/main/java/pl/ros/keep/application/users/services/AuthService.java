@@ -11,9 +11,7 @@ import pl.ros.keep.api.enums.UserType;
 import pl.ros.keep.api.user.UserDto;
 import pl.ros.keep.application.auth.converters.UserConverter;
 import pl.ros.keep.application.auth.services.ContextService;
-import pl.ros.keep.core.users.AppUser;
-
-import java.util.HashMap;
+import pl.ros.keep.core.jpa.users.AppUser;
 
 @Service
 @RequiredArgsConstructor

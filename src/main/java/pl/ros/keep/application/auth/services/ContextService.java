@@ -9,7 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import pl.ros.keep.application.users.services.UserService;
-import pl.ros.keep.core.users.AppUser;
+import pl.ros.keep.core.jpa.users.AppUser;
 
 @Component
 public class ContextService {

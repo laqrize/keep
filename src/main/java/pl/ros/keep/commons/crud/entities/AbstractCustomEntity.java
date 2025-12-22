@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import pl.ros.keep.commons.crud.enums.CrudOperation;
 import pl.ros.keep.commons.crud.enums.EntityStatus;
-import pl.ros.keep.core.users.AppUser;
+import pl.ros.keep.core.jpa.users.AppUser;
 
 import java.time.LocalDateTime;
 
