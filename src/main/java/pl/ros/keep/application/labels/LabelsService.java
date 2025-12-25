@@ -2,6 +2,7 @@ package pl.ros.keep.application.labels;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import pl.ros.keep.api.labels.LabelDto;
 import pl.ros.keep.commons.crud.enums.EntityStatus;
 import pl.ros.keep.commons.crud.services.AbstractCrudService;
@@ -24,6 +25,13 @@ public class LabelsService extends AbstractCrudService<LabelDto, Label> {
                 contextService.getCurrentUser(),
                 EntityStatus.CURRENT.getCode()
         ));
+    }
+
+    public List<LabelDto> findByIds(List<Long> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return List.of();
+        }
+        return converter.toDtoList(getRepository().findAllByIdInAndStatus(ids, EntityStatus.CURRENT.getCode()));
     }
 
     private LabelRepository getRepository() {

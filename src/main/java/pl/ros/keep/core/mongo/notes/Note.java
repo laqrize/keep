@@ -8,6 +8,8 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
 import pl.ros.keep.commons.crud.entities.AbstractCustomEntity;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +21,7 @@ public class Note extends AbstractCustomEntity<String> {
     private String id;
     private String title;
     private String content;
-    //TODO images and labels
+    private List<Long> labelIds;
+    private List<Long> imagesIds;
 
 }

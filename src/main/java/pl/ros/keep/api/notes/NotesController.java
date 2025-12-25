@@ -42,4 +42,10 @@ public class NotesController {
         notesService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}/labels")
+    public ResponseEntity<NoteDto> update(@PathVariable String id, @RequestBody AttachLabelsRequest dto){
+        NoteDto noteDto = notesService.attachLabels(id, dto);
+        return ResponseEntity.ok(noteDto);
+    }
 }

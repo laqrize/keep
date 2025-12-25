@@ -1,11 +1,8 @@
 package pl.ros.keep.commons.crud.services;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
@@ -44,9 +41,6 @@ public abstract class AbstractCustomService<D extends AbstractCustomDto, E exten
         Assert.isTrue(id.equals(dto.getId()), "Id in path and body must be the same");
         validate(dto, CrudOperation.UPDATE);
         E entity = findById((ID) dto.getId());
-//        if (!entity.getVersion().equals(dto.getVersion())) {
-//            throw new VersionMismatchException(dto.getId(), getEntityClass());
-//        }
         setEntityFields(entity, dto);
         entity.updateState(contextService.getCurrentUserId(), CrudOperation.UPDATE);
         entity = repository.save(entity);

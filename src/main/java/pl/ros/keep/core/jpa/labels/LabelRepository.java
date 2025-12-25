@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface LabelRepository extends JpaRepository<Label, Long> {
     List<Label> findAllByCreatedByAndStatus(AppUser createdBy, String status);
+    
+    List<Label> findAllByIdInAndStatus(List<Long> ids, String status);
 }
