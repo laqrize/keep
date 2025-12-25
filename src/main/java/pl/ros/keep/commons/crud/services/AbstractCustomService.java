@@ -1,11 +1,9 @@
 package pl.ros.keep.commons.crud.services;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,7 +13,6 @@ import pl.ros.keep.commons.crud.entities.AbstractCustomEntity;
 import pl.ros.keep.commons.crud.enums.CrudOperation;
 import pl.ros.keep.commons.crud.enums.EntityStatus;
 import pl.ros.keep.commons.converters.IStandardRecordConverter;
-import pl.ros.keep.infrastracture.exceptions.VersionMismatchException;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -24,20 +21,19 @@ import java.lang.reflect.Type;
 public abstract class AbstractCustomService<D extends AbstractCustomDto, E extends AbstractCustomEntity, ID> {
 
     @Autowired
-    protected JpaRepository<E, ID> repository;
+    protected CrudRepository<E, ID> repository;
 
     @Autowired
     protected IStandardRecordConverter<D, E> converter;
 
     @Autowired
-    protected ContextService authHelper;
+    protected ContextService contextService;
 
     public D create(D dto) {
         validate(dto, CrudOperation.CREATE);
         E entity = converter.toEntity(dto);
-        entity.updateState(authHelper.getCurrentUserId(), CrudOperation.CREATE);
+        entity.updateState(contextService.getCurrentUserId(), CrudOperation.CREATE);
         entity = repository.save(entity);
-
         return converter.toDto(entity);
     }
 
@@ -45,11 +41,8 @@ public abstract class AbstractCustomService<D extends AbstractCustomDto, E exten
         Assert.isTrue(id.equals(dto.getId()), "Id in path and body must be the same");
         validate(dto, CrudOperation.UPDATE);
         E entity = findById((ID) dto.getId());
-        if (!entity.getVersion().equals(dto.getVersion())) {
-            throw new VersionMismatchException(dto.getId(), getEntityClass());
-        }
         setEntityFields(entity, dto);
-        entity.updateState(authHelper.getCurrentUserId(), CrudOperation.UPDATE);
+        entity.updateState(contextService.getCurrentUserId(), CrudOperation.UPDATE);
         entity = repository.save(entity);
         return converter.toDto(entity);
     }
@@ -57,7 +50,7 @@ public abstract class AbstractCustomService<D extends AbstractCustomDto, E exten
     public void delete(@NonNull ID id) {
         E entity = findById(id);
         entity.setStatus(EntityStatus.DELETED);
-        entity.updateState(authHelper.getCurrentUserId(), CrudOperation.DELETE);
+        entity.updateState(contextService.getCurrentUserId(), CrudOperation.DELETE);
         repository.save(entity);
     }
 

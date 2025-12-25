@@ -39,7 +39,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/auth/**")
                         .permitAll()
                         .anyRequest()
-                        .hasAnyAuthority(UserType.ADMIN.name())
+                        .hasAnyAuthority(UserType.ADMIN.name(), UserType.USER.name())
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

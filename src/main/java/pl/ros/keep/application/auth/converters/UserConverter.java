@@ -5,7 +5,7 @@ import pl.ros.keep.api.enums.UserType;
 import pl.ros.keep.api.user.UserDto;
 import pl.ros.keep.commons.converters.IStandardRecordConverter;
 import pl.ros.keep.commons.utils.NpeUtils;
-import pl.ros.keep.core.users.AppUser;
+import pl.ros.keep.core.jpa.users.AppUser;
 
 @Component
 public class UserConverter implements IStandardRecordConverter<UserDto, AppUser> {
