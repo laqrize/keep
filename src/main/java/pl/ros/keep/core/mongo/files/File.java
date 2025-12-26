@@ -1,4 +1,4 @@
-package pl.ros.keep.core.mongo.notes;
+package pl.ros.keep.core.mongo.files;
 
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -8,20 +8,17 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
 import pl.ros.keep.commons.crud.entities.AbstractCustomEntity;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Document(collection = "notes")
-public class Note extends AbstractCustomEntity<String> {
-
+@Document(collection = "files")
+public class File extends AbstractCustomEntity<String> {
     @Id
     private String id;
-    private String title;
-    private String content;
-    private List<Long> labelIds;
-    private List<String> imagesIds;
-
+    private String storageLocation;
+    private String key;
+    private String contentType;
+    private String filename;
+    private Long size;
 }

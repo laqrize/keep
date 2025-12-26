@@ -14,6 +14,7 @@ public class NoteConverter implements IStandardRecordConverter<NoteDto, Note> {
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .labelIds(dto.getLabelIds())
+                .imagesIds(dto.getImagesIds())
                 .build();
         setCommonFieldsToEntity(dto, note);
         return note;
@@ -27,6 +28,7 @@ public class NoteConverter implements IStandardRecordConverter<NoteDto, Note> {
                 .content(entity.getContent())
                 .build();
         noteDto.setLabelIds(entity.getLabelIds());
+        noteDto.setImagesIds(entity.getImagesIds());
         setCommonFieldsToDTO(noteDto, entity);
         return noteDto;
     }
