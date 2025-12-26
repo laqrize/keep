@@ -1,9 +1,12 @@
 package pl.ros.keep.api.notes;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.ros.keep.application.files.FileService;
 import pl.ros.keep.application.notes.NotesService;
 
 import java.util.List;
@@ -14,6 +17,7 @@ import java.util.List;
 public class NotesController {
 
     private final NotesService notesService;
+    private final FileService fileService;
 
     @GetMapping
     public List<NoteDto> getAll(){
@@ -26,7 +30,7 @@ public class NotesController {
     }
 
     @PostMapping
-    public ResponseEntity<NoteDto> create(@RequestBody NoteDto dto){
+    public ResponseEntity<NoteDto> create(@RequestBody CreateNoteRequest dto){
         NoteDto noteDto = notesService.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(noteDto);
     }
@@ -47,5 +51,13 @@ public class NotesController {
     public ResponseEntity<NoteDto> update(@PathVariable String id, @RequestBody AttachLabelsRequest dto){
         NoteDto noteDto = notesService.attachLabels(id, dto);
         return ResponseEntity.ok(noteDto);
+    }
+
+    @GetMapping("/images/{imageId}")
+    public ResponseEntity<Resource> downloadImage(@PathVariable String imageId) {
+        var result = fileService.download(imageId);
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(result.contentType()))
+                .body(result.resource());
     }
 }

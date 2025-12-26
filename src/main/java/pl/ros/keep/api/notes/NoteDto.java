@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import pl.ros.keep.api.images.ImageDto;
+import pl.ros.keep.api.images.FileDto;
 import pl.ros.keep.api.labels.LabelDto;
 import pl.ros.keep.commons.crud.dtos.AbstractCustomDto;
 
@@ -20,7 +20,7 @@ public class NoteDto extends AbstractCustomDto<String> {
     private String title;
     private String content;
     private List<LabelDto> labels;
-    private List<ImageDto> images;
+    private List<FileDto> images;
 
     public List<Long> getLabelIds() {
         if (labels == null) {
@@ -42,22 +42,22 @@ public class NoteDto extends AbstractCustomDto<String> {
     }
 
 
-    public List<Long> getImagesIds() {
+    public List<String> getImagesIds() {
         if (images == null) {
             return new ArrayList<>();
         }
         return images.stream()
-                .map(ImageDto::getId)
+                .map(FileDto::getId)
                 .toList();
     }
 
-    public void setImagesIds(List<Long> imagesIds) {
+    public void setImagesIds(List<String> imagesIds) {
         if (imagesIds == null) {
             this.images = new ArrayList<>();
             return;
         }
-        this.images = (List<ImageDto>) imagesIds.stream()
-                .map(id -> ImageDto.builder().id(id).build())
+        this.images = (List<FileDto>) imagesIds.stream()
+                .map(id -> FileDto.builder().id(id).build())
                 .toList();
     }
 
